@@ -1,4 +1,4 @@
-package com.example.PortfolioPulsar;
+package com.example.portfoliopulsar;
 
 public class NativeWrapper {
     static {

@@ -1,4 +1,4 @@
-package com.example.PortfolioPulsar;
+package com.example.portfoliopulsar;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -8,7 +8,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
-import com.example.PortfolioPulsar.databinding.ActivityMainBinding;
+import com.example.portfoliopulsar.databinding.ActivityMainBinding;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class MainActivity extends AppCompatActivity {
