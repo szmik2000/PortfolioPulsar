@@ -4,14 +4,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
-import com.example.portfoliopulsar.databinding.ActivityMainBinding;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-public class MainActivity extends AppCompatActivity {
+public class PortfolioList extends AppCompatActivity {
     static {
         System.loadLibrary("PortfolioPulsar");
     }
@@ -40,10 +38,4 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-
-    /**
-     * A native method that is implemented by the 'PortfolioPulsar' native library,
-     * which is packaged with this application.
-     */
-    public native String stringFromJNI();
 }
