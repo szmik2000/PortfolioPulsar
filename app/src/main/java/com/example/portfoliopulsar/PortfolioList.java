@@ -5,17 +5,21 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class PortfolioList extends AppCompatActivity {
+public class PortfolioList extends AppCompatActivity implements StockAdapter.OnItemClickListener{
     static {
         System.loadLibrary("PortfolioPulsar");
     }
@@ -35,7 +39,7 @@ public class PortfolioList extends AppCompatActivity {
 
         // Initialize your StockAdapter and Portfolio data here
         stocks = new ArrayList<>();
-        stockAdapter = new StockAdapter(stocks);
+        stockAdapter = new StockAdapter(stocks, this);
 
         portfolioListRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         portfolioListRecyclerView.setAdapter(stockAdapter);
@@ -55,10 +59,25 @@ public class PortfolioList extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         String tickerSymbol = tickerSymbolInput.getText().toString();
-                        double avgBuyPrice = Double.parseDouble(avgBuyPriceInput.getText().toString());
-                        double amountInvested = Double.parseDouble(amountInvestedInput.getText().toString());
+                        String avgBuyPriceStr = avgBuyPriceInput.getText().toString();
+                        String amountInvestedStr = amountInvestedInput.getText().toString();
 
-                        // Perform validation on the input fields if necessary
+                        // Check if any of the input fields is empty
+                        if (tickerSymbol.isEmpty() || avgBuyPriceStr.isEmpty() || amountInvestedStr.isEmpty()) {
+                            showCustomToast("Please fill in all fields");
+                            return;
+                        }
+
+                        double avgBuyPrice;
+                        double amountInvested;
+
+                        try {
+                            avgBuyPrice = Double.parseDouble(avgBuyPriceStr);
+                            amountInvested = Double.parseDouble(amountInvestedStr);
+                        } catch (NumberFormatException e) {
+                            showCustomToast("Invalid number format");
+                            return;
+                        }
 
                         // Add the stock to your portfolio data and update the RecyclerView
                         Stock stock = new Stock(tickerSymbol, avgBuyPrice, amountInvested);
@@ -70,9 +89,31 @@ public class PortfolioList extends AppCompatActivity {
                     }
                 });
 
+
                 addStockDialog.show();
             }
         });
 
+    }
+    private void showCustomToast(String message) {
+        LayoutInflater inflater = getLayoutInflater();
+        View layout = inflater.inflate(R.layout.custom_toast, null);
+        TextView text = layout.findViewById(R.id.custom_toast_text);
+        text.setText(message);
+
+        Toast toast = new Toast(getApplicationContext());
+        toast.setDuration(Toast.LENGTH_SHORT);
+        toast.setView(layout);
+        toast.show();
+    }
+
+    @Override
+    public void onItemClick(Stock stock) {
+        // Handle the click event here, e.g., navigate to the ticker's page
+        // You can use an Intent to start the TickerActivity and pass the stock data
+
+        Intent intent = new Intent(this, TickerActivity.class);
+        intent.putExtra("stock", stock.getTickerSymbol());
+        startActivity(intent);
     }
 }
