@@ -1,0 +1,27 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <EditText
+        android:id="@+id/new_buy_price_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="New Buy Price"
+        android:inputType="numberDecimal" />
+
+    <EditText
+        android:id="@+id/new_amount_invested_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="New Amount Invested"
+        android:inputType="numberDecimal" />
+
+    <Button
+        android:id="@+id/add_position_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:text="Add Position" />
+</LinearLayout>

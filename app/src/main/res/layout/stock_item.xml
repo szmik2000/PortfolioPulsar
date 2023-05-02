@@ -1,43 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="16dp"
-    android:background="?attr/selectableItemBackground">
+    android:layout_marginStart="8dp"
+    android:layout_marginTop="8dp"
+    android:layout_marginEnd="8dp"
+    android:clickable="true"
+    android:focusable="true"
+    app:cardCornerRadius="4dp"
+    app:cardElevation="4dp">
 
-    <TextView
-        android:id="@+id/ticker_symbol"
-        android:layout_width="wrap_content"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="AAPL"
-        android:textSize="24sp" />
+        android:padding="16dp">
 
-    <TextView
-        android:id="@+id/avg_buy_price"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Avg Buy Price: $145.00" />
+        <TextView
+            android:id="@+id/ticker_symbol"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/black"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="$AAPL" />
 
-    <TextView
-        android:id="@+id/amount_invested"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Amount Invested: $1000.00" />
+        <ProgressBar
+            android:id="@+id/price_progress_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminate="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/stock_price"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Current Price: $150.00" />
+        <TextView
+            android:id="@+id/stock_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Current Price: $123.45" />
 
-    <ProgressBar
-        android:id="@+id/price_progress_bar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:indeterminate="true"
-        android:visibility="gone"/>
+        <TextView
+            android:id="@+id/avg_buy_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/black"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ticker_symbol"
+            tools:text="Avg Buy Price: $100.00" />
 
+        <TextView
+            android:id="@+id/amount_invested"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/black"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/avg_buy_price"
+            tools:text="Amount Invested: $1000.00" />
 
-</LinearLayout>
+        <TextView
+            android:id="@+id/percentage_gain_loss"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/stock_price"
+            tools:text="Gain/Loss: +10.00%" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</com.google.android.material.card.MaterialCardView>
