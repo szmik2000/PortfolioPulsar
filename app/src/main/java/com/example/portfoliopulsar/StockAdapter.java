@@ -3,15 +3,17 @@ package com.example.portfoliopulsar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
+import java.util.Locale;
 
 public class StockAdapter extends RecyclerView.Adapter<StockAdapter.ViewHolder> {
-    private List<Stock> stocks;
+    private static List<Stock> stocks;
     private final OnItemClickListener onItemClickListener;
 
     public StockAdapter(List<Stock> stocks, OnItemClickListener onItemClickListener) {
@@ -30,13 +32,22 @@ public class StockAdapter extends RecyclerView.Adapter<StockAdapter.ViewHolder> 
         return new ViewHolder(view, onItemClickListener);
     }
 
-
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Stock stock = stocks.get(position);
         holder.tickerSymbol.setText(stock.getTickerSymbol());
         holder.avgBuyPrice.setText(String.format("Avg Buy Price: $%.2f", stock.getAvgBuyPrice()));
         holder.amountInvested.setText(String.format("Amount Invested: $%.2f", stock.getAmountInvested()));
+        TextView stockPriceTextView = holder.itemView.findViewById(R.id.stock_price);
+        ProgressBar priceProgressBar = holder.itemView.findViewById(R.id.price_progress_bar);
+        if (stock.isLoading()) {
+            stockPriceTextView.setVisibility(View.GONE);
+            priceProgressBar.setVisibility(View.VISIBLE);
+        } else {
+            stockPriceTextView.setVisibility(View.VISIBLE);
+            priceProgressBar.setVisibility(View.GONE);
+            stockPriceTextView.setText(String.format(Locale.US, "Current Price: $%.2f", stock.getPrice()));
+        }
     }
 
     @Override
@@ -61,7 +72,10 @@ public class StockAdapter extends RecyclerView.Adapter<StockAdapter.ViewHolder> 
 
         @Override
         public void onClick(View v) {
-            onItemClickListener.onItemClick((Stock) v.getTag());
+            int position = getAdapterPosition();
+            if (position != RecyclerView.NO_POSITION) {
+                onItemClickListener.onItemClick(stocks.get(position));
+            }
         }
     }
 }

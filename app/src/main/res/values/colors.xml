@@ -6,4 +6,7 @@
     <color name="colorSecondary">#8BC34A</color> <!-- Light Green 500 -->
     <color name="colorSecondaryVariant">#689F38</color> <!-- Light Green 700 -->
     <color name="colorOnSecondary">#000000</color> <!-- Black -->
+
+
+
 </resources>
