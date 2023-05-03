@@ -3,6 +3,7 @@ package com.example.portfoliopulsar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -26,7 +27,9 @@ public class StockAdapter extends RecyclerView.Adapter<StockAdapter.ViewHolder> 
 
     public interface OnItemClickListener {
         void onItemClick(Stock stock);
+        void onAddPositionClick(Stock stock); // Add this line
     }
+
     public interface OnItemLongClickListener {
         boolean onItemLongClick(Stock stock);
     }
@@ -70,6 +73,7 @@ public class StockAdapter extends RecyclerView.Adapter<StockAdapter.ViewHolder> 
         public TextView tickerSymbol;
         public TextView avgBuyPrice;
         public TextView amountInvested;
+        public ImageView addPositionIcon;
         private final OnItemClickListener onItemClickListener;
         private final OnItemLongClickListener onItemLongClickListener;
 
@@ -79,6 +83,7 @@ public class StockAdapter extends RecyclerView.Adapter<StockAdapter.ViewHolder> 
             tickerSymbol = itemView.findViewById(R.id.ticker_symbol);
             avgBuyPrice = itemView.findViewById(R.id.avg_buy_price);
             amountInvested = itemView.findViewById(R.id.amount_invested);
+            addPositionIcon = itemView.findViewById(R.id.add_position_icon);
             this.onItemClickListener = onItemClickListener;
             this.onItemLongClickListener = onItemLongClickListener;
             itemView.setOnClickListener(this);
@@ -90,6 +95,15 @@ public class StockAdapter extends RecyclerView.Adapter<StockAdapter.ViewHolder> 
                         return onItemLongClickListener.onItemLongClick(stocks.get(position));
                     }
                     return false;
+                }
+            });
+            addPositionIcon.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int position = getAdapterPosition();
+                    if (position != RecyclerView.NO_POSITION) {
+                        onItemClickListener.onAddPositionClick(stocks.get(position));
+                    }
                 }
             });
         }

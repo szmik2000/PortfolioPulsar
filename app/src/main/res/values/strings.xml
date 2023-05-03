@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">PortfolioPulsar</string>
+    <string name="add_position_title">Add Position to $%1$S</string>
 </resources>

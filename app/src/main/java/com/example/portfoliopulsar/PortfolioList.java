@@ -297,4 +297,61 @@ public class PortfolioList extends AppCompatActivity implements StockAdapter.OnI
         getSupportActionBar().setTitle(title);
     }
 
+    @Override
+    public void onAddPositionClick(Stock stock) {
+        showAddPositionDialog(stock);
+    }
+
+    private void showAddPositionDialog(Stock stock) {
+        final Dialog addPositionDialog = new Dialog(this);
+        addPositionDialog.setContentView(R.layout.add_stock_dialog);
+        TextView dialogTitle = addPositionDialog.findViewById(R.id.dialog_title);
+        dialogTitle.setText(getString(R.string.add_position_title, stock.getTickerSymbol()));
+        EditText tickerSymbolInput = addPositionDialog.findViewById(R.id.ticker_symbol_input);
+        EditText avgBuyPriceInput = addPositionDialog.findViewById(R.id.avg_buy_price_input);
+        EditText amountInvestedInput = addPositionDialog.findViewById(R.id.amount_invested_input);
+        Button addStockButton = addPositionDialog.findViewById(R.id.add_stock_button);
+
+        tickerSymbolInput.setVisibility(View.GONE);
+
+        addStockButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String avgBuyPriceStr = avgBuyPriceInput.getText().toString();
+                String amountInvestedStr = amountInvestedInput.getText().toString();
+
+                if (avgBuyPriceStr.isEmpty() || amountInvestedStr.isEmpty()) {
+                    showCustomToast("Please fill in all fields");
+                    return;
+                }
+
+                double newAvgBuyPrice;
+                double newAmountInvested;
+
+                try {
+                    newAvgBuyPrice = Double.parseDouble(avgBuyPriceStr);
+                    newAmountInvested = Double.parseDouble(amountInvestedStr);
+                } catch (NumberFormatException e) {
+                    showCustomToast("Invalid number format");
+                    return;
+                }
+
+                double currentAmountInvested = stock.getAmountInvested();
+                double currentAvgBuyPrice = stock.getAvgBuyPrice();
+
+                // Calculate the weighted average of the cost basis
+                double newTotalAmountInvested = currentAmountInvested + newAmountInvested;
+                double weightedAvgBuyPrice = (currentAmountInvested * currentAvgBuyPrice + newAmountInvested * newAvgBuyPrice) / newTotalAmountInvested;
+
+                stock.setAvgBuyPrice(weightedAvgBuyPrice);
+                stock.setAmountInvested(newTotalAmountInvested);
+
+                stockAdapter.notifyDataSetChanged();
+                addPositionDialog.dismiss();
+            }
+        });
+
+        addPositionDialog.show();
+    }
+
 }

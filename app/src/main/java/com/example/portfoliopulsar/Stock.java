@@ -9,6 +9,8 @@ public class Stock {
     private double amountInvested;
     private double price;
     private boolean isLoading;
+    private double shares;
+
     //private String companyName;
 
     public Stock(String tickerSymbol, double avgBuyPrice, double amountInvested) {
@@ -29,6 +31,8 @@ public class Stock {
     public void setAmountInvested(double amountInvested) { this.amountInvested = amountInvested; }
     public double getPrice() { return price; }
     public void setPrice(double price) { this.price = price; }
+    public double getShares() { return shares; }
+    public void setShares(double shares) { this.shares = shares; }
     public boolean isLoading() { return isLoading; }
     public void setLoading(boolean isLoading) { this.isLoading = isLoading; }
     public JSONObject toJson() {
@@ -63,4 +67,6 @@ public class Stock {
         }
         return 0;
     }
+
+
 }
