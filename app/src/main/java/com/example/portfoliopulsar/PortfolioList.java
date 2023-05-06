@@ -189,7 +189,7 @@ public class PortfolioList extends AppCompatActivity implements StockAdapter.OnI
     }
 
     private void fetchStockPrice(String ticker) {
-        String apiKey = "7F8U58IWRROUSTCB"; // Replace with your API key
+        String apiKey = BuildConfig.ALPHAVANTAGE_API_KEY;
         String function = "GLOBAL_QUOTE";
 
         String url = "https://www.alphavantage.co/query?function=" + function + "&symbol=" + ticker + "&apikey=" + apiKey;
@@ -226,8 +226,6 @@ public class PortfolioList extends AppCompatActivity implements StockAdapter.OnI
                                 break;
                             }
                         }
-
-
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
