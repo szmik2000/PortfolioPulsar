@@ -98,7 +98,7 @@ public class PortfolioList extends AppCompatActivity implements StockAdapter.OnI
         portfolioListRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         portfolioListRecyclerView.setAdapter(stockAdapter);
         // Start periodic stock price updates
-        stockPriceUpdateHandler.post(stockPriceUpdateRunnable);
+        //stockPriceUpdateHandler.post(stockPriceUpdateRunnable);
         addStockFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -129,7 +129,7 @@ public class PortfolioList extends AppCompatActivity implements StockAdapter.OnI
 
                         // Check if any of the input fields is empty
                         if (tickerSymbol.isEmpty() || avgBuyPriceStr.isEmpty() || amountInvestedStr.isEmpty()) {
-                            showCustomToast("Please fill in all fields");
+                            CustomToast.show(PortfolioList.this,"Please fill in all fields");
                             return;
                         }
 
@@ -140,7 +140,7 @@ public class PortfolioList extends AppCompatActivity implements StockAdapter.OnI
                             avgBuyPrice = Double.parseDouble(avgBuyPriceStr);
                             amountInvested = Double.parseDouble(amountInvestedStr);
                         } catch (NumberFormatException e) {
-                            showCustomToast("Invalid number format");
+                            CustomToast.show(PortfolioList.this,"Invalid number format");
                             return;
                         }
 
@@ -163,19 +163,7 @@ public class PortfolioList extends AppCompatActivity implements StockAdapter.OnI
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        stockPriceUpdateHandler.removeCallbacks(stockPriceUpdateRunnable);
-    }
-
-    private void showCustomToast(String message) {
-        LayoutInflater inflater = getLayoutInflater();
-        View layout = inflater.inflate(R.layout.custom_toast, null);
-        TextView text = layout.findViewById(R.id.custom_toast_text);
-        text.setText(message);
-
-        Toast toast = new Toast(getApplicationContext());
-        toast.setDuration(Toast.LENGTH_SHORT);
-        toast.setView(layout);
-        toast.show();
+        //stockPriceUpdateHandler.removeCallbacks(stockPriceUpdateRunnable);
     }
 
     @Override
@@ -319,7 +307,8 @@ public class PortfolioList extends AppCompatActivity implements StockAdapter.OnI
                 String amountInvestedStr = amountInvestedInput.getText().toString();
 
                 if (avgBuyPriceStr.isEmpty() || amountInvestedStr.isEmpty()) {
-                    showCustomToast("Please fill in all fields");
+                    CustomToast.show(PortfolioList.this, "Please fill in all fields");
+
                     return;
                 }
 
@@ -330,7 +319,7 @@ public class PortfolioList extends AppCompatActivity implements StockAdapter.OnI
                     newAvgBuyPrice = Double.parseDouble(avgBuyPriceStr);
                     newAmountInvested = Double.parseDouble(amountInvestedStr);
                 } catch (NumberFormatException e) {
-                    showCustomToast("Invalid number format");
+                    CustomToast.show(PortfolioList.this, "Invalid number format");
                     return;
                 }
 
