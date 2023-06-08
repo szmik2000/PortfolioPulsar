@@ -14,11 +14,6 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        externalNativeBuild {
-            cmake {
-                cppFlags '-std=c++17'
-            }
-        }
         buildConfigField "String", "ALPHAVANTAGE_API_KEY", "\"${ALPHAVANTAGE_API_KEY}\""
     }
 
@@ -35,12 +30,6 @@ android {
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
-    }
-    externalNativeBuild {
-        cmake {
-            path file('src/main/cpp/CMakeLists.txt')
-            version '3.22.1'
-        }
     }
     buildFeatures {
         viewBinding true

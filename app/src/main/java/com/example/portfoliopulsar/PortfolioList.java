@@ -45,9 +45,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class PortfolioList extends AppCompatActivity implements StockAdapter.OnItemClickListener{
-    static {
-        System.loadLibrary("PortfolioPulsar");
-    }
     private static final String TAG = "PortfolioList";
     private static final String SHARED_PREFS_NAME = "portfolioPulsar";
     private static final String STOCKS_KEY = "stocks";
